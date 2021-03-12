@@ -1,0 +1,26 @@
+dist: bionic
+language: java
+
+git:
+  depth: false
+
+script:
+  # Download the latest bob.jar
+  - mkdir -p build/bob || travis_terminate 1
+  - curl -s 'http://d.defold.com/stable/info.json' | python3 -c "import sys, json; print('https://d.defold.com/archive/' + json.load(sys.stdin)['sha1'] + '/bob/bob.jar')" | wget --progress=dot:mega -i - -O build/bob/bob.jar || travis_terminate 1
+
+  # Build the project
+  # WARN: remove "--variant debug" if you're going to use this script!
+  - java -jar build/bob/bob.jar --email foo@bar.com --auth 12345 --texture-compression true --bundle-output build/bundle/js-web --build-report-html build/bundle/report.html --platform js-web --archive --variant debug resolve build bundle || travis_terminate 1
+
+  # Move to the public directory
+  - mv build/bundle/js-web/basis_quality_test build/public || travis_terminate 1
+  - mv build/bundle/report.html build/public/report.html || travis_terminate 1
+
+deploy:
+  provider: pages
+  skip_cleanup: true
+  github_token: $GITHUB_TOKEN
+  local_dir: build/public
+  on:
+    branch: main

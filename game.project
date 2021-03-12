@@ -1,0 +1,30 @@
+[bootstrap]
+main_collection = /main/main.collectionc
+
+[script]
+shared_state = 1
+
+[display]
+width = 640
+height = 960
+high_dpi = 1
+
+[android]
+input_method = HiddenInputField
+
+[project]
+title = basis_quality_test
+dependencies = 
+
+[graphics]
+texture_profiles = /main/custom.texture_profiles
+
+[render]
+clear_color_alpha = 1.0
+clear_color_red = 0.9
+clear_color_green = 0.9
+clear_color_blue = 0.9
+
+[html5]
+scale_mode = fit
+
