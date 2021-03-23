@@ -10,22 +10,22 @@ script:
   - VERSION=180
   - SHA1=f34b08dc12af1101ae62c6e880b6373a03206174
   - rm -rf build && mkdir -p build/bundle || travis_terminate 1
-  - wget --progress=dot:mega -i https://d.defold.com/archive/${SHA1}/bob/bob.jar -O build/bob.jar || travis_terminate 1
+  - wget --progress=dot:mega -i https://d.defold.com/archive/$SHA1/bob/bob.jar -O build/bob.jar || travis_terminate 1
   - java -jar build/bob.jar --email foo@bar.com --auth 12345 --texture-compression true --bundle-output build/bundle/js-web --build-report-html build/bundle/report.html --platform js-web --archive --variant debug resolve build bundle || travis_terminate 1
-  - mv build/bundle/js-web/basis_quality_test .public/${VERSION} || travis_terminate 1
-  - mv build/bundle/report.html .public/${VERSION}/report.html || travis_terminate 1
+  - mv build/bundle/js-web/basis_quality_test .public/$VERSION || travis_terminate 1
+  - mv build/bundle/report.html .public/$VERSION/report.html || travis_terminate 1
 
   - VERSION=179
   - SHA1=5209b50cf4bf8e925cb4c32fd0bde6c53fc85a66
   - rm -rf build && mkdir -p build/bundle || travis_terminate 1
   ### Replace UASTC for the old version
   - sed -i 's/COMPRESSION_TYPE_BASIS_UASTC/COMPRESSION_TYPE_DEFAULT/g' main/custom.texture_profiles
-  - sed -i 's/UASTC/DISABLED FOR ${VERSION}/g' main/main.collection
+  - sed -i "s/UASTC/DISABLED FOR $VERSION/g" main/main.collection
   ###
-  - wget --progress=dot:mega -i https://d.defold.com/archive/${SHA1}/bob/bob.jar -O build/bob.jar || travis_terminate 1
+  - wget --progress=dot:mega -i https://d.defold.com/archive/$SHA1/bob/bob.jar -O build/bob.jar || travis_terminate 1
   - java -jar build/bob.jar --email foo@bar.com --auth 12345 --texture-compression true --bundle-output build/bundle/js-web --build-report-html build/bundle/report.html --platform js-web --archive --variant debug resolve build bundle || travis_terminate 1
-  - mv build/bundle/js-web/basis_quality_test .public/${VERSION} || travis_terminate 1
-  - mv build/bundle/report.html .public/${VERSION}/report.html || travis_terminate 1
+  - mv build/bundle/js-web/basis_quality_test .public/$VERSION || travis_terminate 1
+  - mv build/bundle/report.html .public/$VERSION/report.html || travis_terminate 1
 
 deploy:
   provider: pages
